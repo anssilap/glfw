@@ -9,36 +9,23 @@ function link_glfw()
 	includedirs {"../" .. glfw_dir .. "/include" }
 
 	filter "action:vs*"
-		--defines{"_WINSOCK_DEPRECATED_NO_WARNINGS", "_CRT_SECURE_NO_WARNINGS"}
 		dependson {"glfw"}
 		links {"GLFW.lib"}
-		--characterset ("MBCS")
+		characterset ("MBCS")
 
 	filter "system:windows"
 		defines{"_WIN32"}
 		links {"winmm", "kernel32", "opengl32", "gdi32"}
 		libdirs {"../_bin/%{cfg.buildcfg}"}
-
-	-- filter "system:linux"
-	--     links {"pthread", "GL", "m", "dl", "rt", "X11"}
-
-	-- filter "system:macosx"
-	--     links {"OpenGL.framework", "Cocoa.framework", "IOKit.framework", "CoreFoundation.framework", "CoreAudio.framework", "CoreVideo.framework"}
-
-	filter{}
 end
 
 group "External dependecies"
 	project "glfw"
 		kind "StaticLib"
 		language "C"
-		-- staticruntime "off"
-		-- warnings "off"
 	
 		location ("../_project")
 		targetdir "../_bin/%{cfg.buildcfg}"
-		--targetdir ("_bin/" .. outputdir .. "/%{prj.name}")
-		--objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 	
 		files
 		{
